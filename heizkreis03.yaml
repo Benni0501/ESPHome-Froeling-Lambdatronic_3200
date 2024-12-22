@@ -1,0 +1,136 @@
+sensor:  
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Vorlauf-Isttemperatur"
+    id: ${name}_HK3_Vorlauf_Isttemperatur
+    register_type: read
+    address: 1090 # changed
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    state_class: "measurement"
+    value_type: U_WORD
+    filters:
+      - multiply: 0.5
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Vorlauf-Solltemperatur"
+    id: ${name}_HK3_Vorlauf_Solltemperatur
+    register_type: read
+    address: 1091 # changed
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    filters:
+      - multiply: 0.5
+
+
+binary_sensor:
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Pumpe AN AUS"
+    id: ${name}_HK3_Pumpe_AN_AUS
+    register_type: coil
+    address: 1089 # changed
+
+number:
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Gewünschte Vorlauf-temperatur bei -10°C Außentemperatur"
+    id: ${name}_HK3_Vorlauf_Temperatur_minus_10C_Aussentemperatur
+    address: 1092 # changed
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    multiply: 2
+    min_value: 10
+    max_value: 110
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Gewünschte Vorlauf-temperatur bei +10°C Außentemperatur"
+    id: ${name}_HK3_Vorlauf_Temperatur_10C_Aussentemperatur
+    address: 1091 # changed
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    multiply: 2
+    min_value: 10
+    max_value: 110
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Heizkreispumpe ausschalten wenn Vorlauf Soll kleiner ist als"
+    id: ${name}_HK3_Heizkreispumpe_ausschalten_wenn_Vorlauf_Soll_kleiner_ist_als
+    address: 1099 # changed
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    multiply: 2
+    min_value: 10
+    max_value: 30
+    
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Absenkung der Vorlauftemperatur im Absenkbetrieb"
+    id: ${name}_HK3_Absenkung_der_Vorlauftemperatur_im_Absenkbetrieb
+    address: 1093 # changed
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    multiply: 2
+    min_value: 0
+    max_value: 70
+    
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Außentemperatur, unter der die Heizkreispumpe im Heizbetrieb einschaltet"
+    id: ${name}_HK3_Aussentemperatur_unter_der_die_Heizkreispumpe_im_Heizbetrieb_einschaltet
+    address: 1096 # changed
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    multiply: 2
+    min_value: -20
+    max_value: 50
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Außentemperatur, unter der die Heizkreispumpe im Absenkbetrieb einschaltet"
+    id: ${name}_HK3_Aussentemperatur_unter_der_die_Heizkreispumpe_im_Absenkbetrieb_einschaltet
+    address: 1097 # changed
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    multiply: 2
+    min_value: -20
+    max_value: 50
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Frostschutztemperatur"
+    id: ${name}_HK3_Frostschutztemperatur
+    address: 1098 # changed
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    multiply: 2
+    min_value: -10
+    max_value: 20
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Temp. am Puffer oben ab der der Überhitzungsschutz aktiv wird"
+    id: ${name}_HK3_Temp_am_Puffer_oben_ab_der_der_Ueberhitzungsschutz_aktiv_wird
+    address: 1135 # changed
+    unit_of_measurement: "°C"
+    value_type: U_WORD
+    min_value: 60
+    max_value: 120
+
+select:
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${name} HK3 - Betriebsart"
+    id: ${name}_HK3_Betriebsart
+    address: 8048 # changed
+    value_type: U_WORD
+    optionsmap:
+      "Aus": 0
+      "Automatik": 1
+      "Extraheizen": 2
+      "Absenken": 3
+      "Dauerabsenken": 4
+      "Partybetrieb": 5
